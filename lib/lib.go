@@ -42,10 +42,10 @@ func Data(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	userJson, err := json.Marshal(user)
-	if err != nil {
-		panic(err)
-	}
+	// userJson, err := json.Marshal(user)
+	// if err != nil {
+	// 	panic(err)
+	// }
 
 	fName := "data.csv"
 	file, err := os.OpenFile(fName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
@@ -83,9 +83,12 @@ func Data(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(strconv.Itoa(id) + ": " + name + " " + description + " " + price + " " + review + " " + imageUrl + " " + time)
 	}
 
-	fmt.Printf(user.Product.Name)
+	//fmt.Printf(userJson)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	//Write json response back to response
-	w.Write(userJson)
+	res := "Data Saved in DB"
+	json.NewEncoder(w).Encode(res)
+	//w.Write(res)
+
 }
