@@ -3,8 +3,9 @@ scrapping data online
 
 There is two api's
 
-1.localhost:5000/amazonData
-This take one Query Params 
+1.(POST) localhost:5000/amazonData
+
+Parameters
 
 amazonUrl : url of amazon product
 
