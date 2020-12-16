@@ -3,7 +3,10 @@ scrapping data online
 
 There is two API's
 
-1.(POST) localhost:5000/amazonData
+To run the first api
+# go run ascrapping.go
+
+ # (POST) localhost:5000/amazonData
 
 Parameters
 
@@ -22,9 +25,10 @@ Sample Response
 202 
 "SCRAPPING COMPLEATED AND DATA IS SAVED IN DB"
 
+To run the first api
+# go run jscrapping.go
 
-
-2. (POST) localhost:5000/jsonData
+#  (POST) localhost:5000/jsonData
 
 Parameters
 url: ProductUrl
@@ -54,7 +58,7 @@ Sample Response
 "Data Saved in DB"
 
 
-Requirements
+# Requirements
 
 1. gorilla/mux(for routing)
  installation 
@@ -75,6 +79,6 @@ installation
 
 Important: Because this is a CGO enabled package you are required to set the environment variable CGO_ENABLED=1 and have a GCC compile present within your path.
 
-To run the assignment
+The data saved in the DB can be seen on the terminal
 
-go run main.go
+
