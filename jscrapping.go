@@ -1,4 +1,4 @@
-package lib
+package main
 
 import (
 	"database/sql"
@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/gorilla/mux"
 	_ "github.com/mattn/go-sqlite3"
 
 )
@@ -27,12 +28,18 @@ type User struct {
 	CreatedAt time.Time
 }
 
+func main() {
 
-func Data(w http.ResponseWriter, r *http.Request) {
+	router := mux.NewRouter()
+	go router.HandleFunc("/jsonData",data)
+	http.ListenAndServe(":5000", router)
+
+}
+func data(w http.ResponseWriter, r *http.Request) {
 
 
-	database, _ := sql.Open("sqlite3", "./amazonProductInfo.db")
-	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY, name VARCHAR , description VARCHAR, price VARCHAR, review VARCHAR, imageUrl VARCHAR, time VARCHAR)")
+	database, _ := sql.Open("sqlite3", "./jsonProductInfo.db")
+	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS jsondata (id INTEGER PRIMARY KEY, name VARCHAR , description VARCHAR, price VARCHAR, review VARCHAR, imageUrl VARCHAR, time VARCHAR)")
 	statement.Exec()
 
 	var user User
@@ -66,10 +73,10 @@ func Data(w http.ResponseWriter, r *http.Request) {
 	var testStrings [][]string
 	testStrings = append(testStrings, []string{user.Product.Name, user.Product.Description, user.Product.Price, user.Product.TotalReview, user.Product.ImageUrl, cTime.String()})
 	writer.WriteAll(testStrings)
-	statement, _ = database.Prepare("INSERT INTO data (name, description, price, review,imageUrl, time) VALUES (?, ?, ?, ?, ?, ?)")
+	statement, _ = database.Prepare("INSERT INTO jsondata (name, description, price, review,imageUrl, time) VALUES (?, ?, ?, ?, ?, ?)")
 	statement.Exec(user.Product.Name,user.Product.Description, user.Product.Price, user.Product.TotalReview, user.Product.ImageUrl, cTime.String())
 
-	rows, _ := database.Query("SELECT id,name, description, price, review,imageUrl, time FROM data")
+	rows, _ := database.Query("SELECT id,name, description, price, review,imageUrl, time FROM jsondata")
 	var id int
 	var name string
 	var description string

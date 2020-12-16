@@ -5,7 +5,6 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	"gsr/lib"
 	"log"
 	"net/http"
 	"os"
@@ -22,7 +21,6 @@ func main() {
 
 	router := mux.NewRouter()
 	go router.HandleFunc("/amazonData", amzData)
-	router.HandleFunc("/jsonData",lib.Data)
 	http.ListenAndServe(":5000", router)
 
 }
